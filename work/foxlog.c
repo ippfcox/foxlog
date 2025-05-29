@@ -3,10 +3,12 @@
 #include <stdlib.h>
 #include "foxlog.h"
 
+#define MODULE_NAME_LEN 8
+
 struct foxlogger
 {
     enum foxlog_level level; // must be 1st member!
-    char module_name[8];
+    char module_name[MODULE_NAME_LEN];
 };
 
 struct foxlogger *g_foxlogger = &(struct foxlogger){
@@ -18,12 +20,28 @@ struct foxlogger *foxlog_create(const char *module_name)
     struct foxlogger *logger = calloc(1, sizeof(struct foxlogger));
     if (!logger)
     {
+#if defined(_WIN32)
+        char err_str[256] = {0};
+        strerror_s(err_str, 256, errno);
+        fprintf(stderr, "calloc failed: %s\n", err_str);
+#elif defined(__linux__)
         fprintf(stderr, "calloc failed: %s\n", strerror(errno));
+#else
+        fprintf(stderr, "calloc failed: %s\n", strerror(errno));
+#endif
         return NULL;
     }
 
     if (module_name)
-        strncpy(logger->module_name, module_name, 8);
+    {
+#if defined(_WIN32)
+        strncpy_s(logger->module_name, MODULE_NAME_LEN, module_name, MODULE_NAME_LEN);
+#elif defined(__linux__)
+        strncpy(logger->module_name, module_name, MODULE_NAME_LEN);
+#else
+        strncpy(logger->module_name, module_name, MODULE_NAME_LEN);
+#endif
+    }
     logger->level = FOXLOG_LEVEL_WARN;
 
     return logger;
