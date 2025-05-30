@@ -119,13 +119,14 @@ extern "C"
         char module_name[MODULE_NAME_LEN];
     };
 
-    struct foxlogger *g_foxlogger = &(struct foxlogger){
+    struct foxlogger g_foxlogger_ = {
         .level = FOXLOG_LEVEL_WARN,
     };
+    struct foxlogger *g_foxlogger = &g_foxlogger_;
 
     struct foxlogger *foxlog_create(const char *module_name)
     {
-        struct foxlogger *logger = calloc(1, sizeof(struct foxlogger));
+        struct foxlogger *logger = (struct foxlogger *)calloc(1, sizeof(struct foxlogger));
         if (!logger)
         {
 #if defined(_WIN32)
