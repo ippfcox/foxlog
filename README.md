@@ -12,6 +12,8 @@
 
 ## Usage
 
+Just copy foxlog.h to your project.
+
 ```c
 #define FOXLOG_IMPLEMENTATION
 #include "foxlog.h"
