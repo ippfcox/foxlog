@@ -1,4 +1,6 @@
-# foxlog
+# 🤔 foxlog
+
+![foxlog](asset/header.png)
 
 >  A lightweight and fast header-only logging library for C projects.
 

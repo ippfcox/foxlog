@@ -21,6 +21,13 @@
 
 // foxlog - A lightweight header-only C logging library
 
+// Update Date: 2025.8.14 16:00
+
+// Usage: 
+
+// #define FOXLOG_IMPLEMENTATION
+// #include "foxlog.h"
+
 // TODO
 // [ ] Support redirect log output (file/stdout/etc.)
 // [ ] Add runtime color enable/disable option
